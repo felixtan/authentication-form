@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Awesome Auth Portal</title>
+    <link href="./style.css" rel='stylesheet' />
+  </head>
+
+  <body>
+      <div id='loginForm' class='container'>
+        <h2 class='header'>Welcome!</h2>
+
+        <form class='form' name='login'>
+          Email: <input type='email' name='email' form='login' required=""/><br>
+          Password: <input type='password' name='password' form='login' required=""/>
+          <div class='options'>
+            <div>
+              <a href='#' class='forgotPasswordLink'>Forgot Password?</a>
+              <a href='#' id='signupLink'>Sign Up Here!</a>
+            </div>
+            <button>Login</button>
+          </div>
+        </form>
+      </div>
+
+      <div id='signupForm' class='container'>
+        <h2 class='header'>Sign Up!</h2>
+
+        <form class='form' name='signup'>
+          <div>
+            First Name: <input type='text' form='signup' name='firstName' required /><br>
+            Last Name: <input type='text' form='signup' name='lastName' required />
+          </div>
+          Email: <input type='email' name='email' form='signup' required /><br>
+          Password: <input type='password' name='password' form='signup' required />
+          <div class='options'>
+            <div>
+              <a href='#' class='forgotPasswordLink'>Forgot Password?</a>
+              <a href='#' id='loginLink'>Log In Here!</a>
+            </div>
+            <button>Submit</button>
+          </div>
+        </form>
+      </div>
+
+      <script>
+        const start = Date.now()
+
+        function time() { console.log(`${document.readyState}: ${Date.now() - start}ms`) }
+
+        document.readyState === 'loading' ? time() : ''
+
+        document.addEventListener('DOMContentLoaded', () => {
+          time()
+          const signupLink = document.getElementById('signupLink')
+          const signupForm = document.getElementById('signupForm')
+          const loginLink = document.getElementById('loginLink')
+          const loginForm = document.getElementById('loginForm')
+
+          signupLink.addEventListener('click', (e) => {
+            // console.log(arguments)
+            console.log(e)
+            signupForm.style.display = 'block'
+            loginForm.style.display = 'none'
+          })
+
+          loginLink.addEventListener('click', () => {
+            signupForm.style.display = 'none'
+            loginForm.style.display = 'block'
+          })
+        })
+
+        window.addEventListener('DOMContentLoaded', () => time())
+
+        window.addEventListener('load', () => {
+        //   // why doesnt it work when I attach this to document?
+          time()
+        })
+
+        // 1
+        window.onload = () => time()
+
+        // overwrites the above
+        window.onload = () => console.log('overwrites')
+
+        // adds click to html el
+        document.children[0].addEventListener('click', () => console.log('foo'))
+      </script>
+  </body>
+</html>

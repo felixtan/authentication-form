@@ -1,0 +1,13 @@
+html,
+body {
+  height: 100%;
+}
+
+#signupForm {
+  display: none;
+}
+
+/* Maybe implement later */
+.forgotPasswordLink {
+  display: none;
+}
