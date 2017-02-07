@@ -1,13 +1,112 @@
 html,
 body {
   height: 100%;
+  font-family: 'Open Sans', sans-serif;
 }
 
-#signupForm {
-  display: none;
+/* Grid */
+/* TODO: use flexbox */
+.row {
+  margin: 5% auto;
 }
 
-/* Maybe implement later */
-.forgotPasswordLink {
-  display: none;
+@media only screen and (min-width: 320px) { .col-8.formContainer { width: 100%; }}
+@media only screen and (min-width: 600px) { .col-8.formContainer { width: 87.33%; }}
+@media only screen and (min-width: 768px) { .col-8.formContainer { width: 38%; }}
+@media only screen and (min-width: 1152px) { .col-8.formContainer { width: 25.33%; }}
+@media only screen and (min-width: 2016px) { .col-8.formContainer { width: 12.66%; }}
+
+/* Links */
+a {
+  color: hsl(190, 50%, 50%);
+}
+
+a:link {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.optionLinkContainer {
+  display: inline-block;
+  width: 100%;
+}
+
+.signupLinkContainer {
+  text-align: right;
+  width: 50%;
+}
+
+.forgotLinkContainer {
+  float: left;
+  width: 50%;
+  /*display: none;*/
+}
+
+.clearContainer {
+  clear: both;
+  height: 0%;
+}
+
+/* Form inputs and labels */
+input {
+  height: 30px;
+  font-size: 1em;
+  display: inline-block;
+  border-radius: 3px;
+  width: 100%;
+}
+
+.labelContainer {
+  margin-bottom: 2%;
+  font-weight: 600;
+}
+
+.inputContainer {
+  margin-bottom: 5%;
+}
+
+/* Buttons */
+.btn {
+  height: 40px;
+  width: 100%;
+  display: inline-block;
+  border-radius: 3px;
+}
+
+button[type="submit"] {
+  background-color: hsl(190, 60%, 50%);
+  border: 0px;
+  font-size: 1.25em;
+  color: white;
+
+  /* for button press effect */
+  box-shadow: 0px 4px 1px gray;
+  position: relative;
+}
+
+button:hover {
+  animation: darken;
+  animation-fill-mode: forwards;
+
+  /* button press effect */
+  top: 4px;
+  box-shadow: 0px 0px;
+}
+
+@keyframes darken {
+  from { background-color: hsl(190, 60%, 50%); }
+  to { background-color: hsl(190, 60%, 40%); }
+}
+
+/* Other form elements */
+legend {
+  text-align: left;
+}
+
+fieldset {
+  border-top-color: hsl(190, 65%, 50%);
+  border-top-width: 5px;
 }

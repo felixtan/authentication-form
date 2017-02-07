@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Awesome Auth Portal</title>
+    <link href="./style.css" rel='stylesheet' />
+  </head>
+
+  <body>
+    <!-- <div class='container'> -->
+      <div class='row col-8 formContainer'>
+        <form id='loginForm' class='form' method='get' action='/login'>
+          <fieldset>
+            <!-- <legend>
+                <h2>Login</h2>
+            </legend> -->
+
+            <div class='row col-8'>
+              <div class='labelContainer'>
+                <label for='loginEmail'>Email:</label>
+              </div>
+              <div class='inputContainer'>
+                <input type='email' id='loginEmail' form='loginForm' name='email' required/><br>
+              </div>
+
+              <div class='labelContainer'>
+                <label for='loginPassword'>Password:</label>
+              </div>
+              <div class='inputContainer'>
+                <input type='password' id='loginPassword' form='loginForm' name='password' required/>
+              </div>
+            </div>
+
+            <div class='row col-8'>
+              <button type='submit' form='loginForm' class='btn'>Login</button>
+              <div class='row'>
+                <!-- <div class='optionLinkContainer clearContainer'></div> -->
+
+                <div class='optionLinkContainer forgotLinkContainer'>
+                  <a href='#' class='forgotPasswordLink'>Forgot Password?</a>
+                </div>
+
+                <div class='optionLinkContainer signupLinkContainer'>
+                  <a href='/signup' id='signupLink'>Sign Up!</a>
+                </div>
+
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    <!-- </div> -->
+
+    <script src='./submitOnEnter.js' type='text/javascript'></script>
+  </body>
+</html>
