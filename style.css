@@ -1,7 +1,7 @@
 html,
 body {
   height: 100%;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Roboto', 'Open Sans', sans-serif;
 }
 
 /* Grid */
@@ -19,6 +19,7 @@ body {
 /* Links */
 a {
   color: hsl(190, 50%, 50%);
+  font-weight: 300;
 }
 
 a:link {
@@ -63,6 +64,20 @@ input {
   box-sizing: border-box;
 }
 
+input:focus {
+  outline: none;
+  border-color: #85BFFD;
+  border-width: 1px;
+}
+
+.invalid-input {
+  border-color: red;
+}
+
+label {
+  font-weight: 500;
+}
+
 ::-webkit-input-placeholder {
   font-weight: 300;
 }
@@ -81,6 +96,12 @@ input {
 
 .inputContainer {
   margin-bottom: 5%;
+}
+
+.optional-field-notification {
+  /*font-weight: 300;*/
+  font-size: 0.75em;
+  color: gray;
 }
 
 /* Buttons */
@@ -119,12 +140,13 @@ button:hover {
 /* Other form elements */
 legend {
   text-align: left;
+  font-weight: 500;
 }
 
 fieldset {
-  border-width: 1px;
   border-style: solid;
   border-color: hsl(0, 0%, 85%);
   border-top-color: hsl(190, 65%, 50%);
   border-top-width: 5px;
+  border-width: 0px;
 }
