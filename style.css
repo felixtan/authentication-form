@@ -52,16 +52,31 @@ a:hover {
 
 /* Form inputs and labels */
 input {
-  height: 30px;
+  height: 32px;
   font-size: 1em;
-  display: inline-block;
   border-radius: 3px;
+  border-width: 1px;
+  border-color: hsl(0, 0%, 85%);
+  border-style: solid;
+  text-indent: 5px;
   width: 100%;
+  box-sizing: border-box;
+}
+
+::-webkit-input-placeholder {
+  font-weight: 300;
+}
+
+:-ms-input-placeholder {
+  font-weight: 300;
+}
+
+::-ms-input-placeholder {
+  font-weight: 300;
 }
 
 .labelContainer {
   margin-bottom: 2%;
-  font-weight: 600;
 }
 
 .inputContainer {
@@ -83,8 +98,8 @@ button[type="submit"] {
   color: white;
 
   /* for button press effect */
-  box-shadow: 0px 4px 1px gray;
-  position: relative;
+  /*box-shadow: 0px 4px 1px gray;*/
+  /*position: relative;*/
 }
 
 button:hover {
@@ -92,8 +107,8 @@ button:hover {
   animation-fill-mode: forwards;
 
   /* button press effect */
-  top: 4px;
-  box-shadow: 0px 0px;
+  /*top: 4px;*/
+  /*box-shadow: 0px 0px;*/
 }
 
 @keyframes darken {
@@ -107,6 +122,9 @@ legend {
 }
 
 fieldset {
+  border-width: 1px;
+  border-style: solid;
+  border-color: hsl(0, 0%, 85%);
   border-top-color: hsl(190, 65%, 50%);
   border-top-width: 5px;
 }
