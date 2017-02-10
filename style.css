@@ -5,7 +5,7 @@ body {
 }
 
 /* Grid */
-/* TODO: use flexbox */
+/* TODO: use flexbox? */
 .row {
   margin: 5% auto;
 }
@@ -70,8 +70,16 @@ input:focus {
   border-width: 1px;
 }
 
-.invalid-input {
+input.invalid-input {
   border-color: red;
+}
+
+input.dirty-input.valid-input {
+  border-color: hsl(120, 75%, 50%);
+}
+
+input.dirty-input.valid-input.empty-input {
+  border-color: hsl(0, 0%, 85%);
 }
 
 label {

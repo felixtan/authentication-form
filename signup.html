@@ -29,6 +29,8 @@
                        type='text'
                        form='signupForm'
                        name='fullName'
+                       pattern='[\x27\x2C-\x2E\x41-\x5A\x61-\x7A\xC0-\xD6\xD8-\xF6\xF8-\xFF\s]+'
+                       maxlength='100'
                        required />
                 <br>
               </div>
@@ -41,7 +43,8 @@
                 <input id='companyName'
                        type='text'
                        form='signupForm'
-                       name='companyName' />
+                       name='companyName'
+                       class='optional' />
                 <br>
               </div>
 
@@ -68,9 +71,6 @@
                        required />
               </div>
 
-            </div>
-
-            <div class='row col-8'>
               <button type='submit' form='signupForm' class='btn'>Sign Up</button>
 
               <div class='row'>
@@ -84,6 +84,7 @@
                   <a href='/login' id='loginLink'>Log In!</a>
                 </div>
               </div>
+
             </div>
           </fieldset>
         </form>
