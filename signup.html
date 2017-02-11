@@ -29,7 +29,7 @@
                        type='text'
                        form='signupForm'
                        name='fullName'
-                       pattern='[\x27\x2C-\x2E\x41-\x5A\x61-\x7A\xC0-\xD6\xD8-\xF6\xF8-\xFF\s]+'
+                       pattern='[\s\x27\x30-\x39\x2C-\x2E\x41-\x5A\x61-\x7A\xC0-\xD6\xD8-\xF6\xF8-\xFF\u0100-\uFFFF]+'
                        maxlength='100'
                        required />
                 <br>
@@ -44,6 +44,8 @@
                        type='text'
                        form='signupForm'
                        name='companyName'
+                       pattern='[\s\x21\x26\x27\x30-\x39\x2C-\x2E\x41-\x5A\x61-\x7A\xC0-\xD6\xD8-\xF6\xF8-\xFF\u0100-\uFFFF]+'
+                       maxlength='50'
                        class='optional' />
                 <br>
               </div>
