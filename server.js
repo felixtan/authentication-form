@@ -61,9 +61,7 @@ app.post('/signup', (req, res) => {
           <h4>Body:</h4>
           <p>${JSON.stringify(req.body, null, 4)}</p>
 
-          <h5>Password:</h5>
-          <!--<p>${encodeURI(req.body.password)}</p>-->
-          <!--<p>"\<script\>alert('You have an XSS vulnerability!')\<\/script\>"</p>-->
+          <!--<p>"\\u003Cscript\\u003Ealert('You have an XSS vulnerability!')\\u003C\\u002Fscript\\u003E"</p>-->
         </div>
       </body>
     </html>
