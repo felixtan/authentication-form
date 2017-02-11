@@ -82,6 +82,18 @@ input.dirty-input.valid-input.empty-input {
   border-color: hsl(0, 0%, 85%);
 }
 
+input#showPassword {
+  width: 23px;
+  margin: 0;
+  vertical-align: middle;
+}
+
+label#showPasswordLabel {
+  position: relative;
+  top: 1.5px;
+  font-weight: 300;
+}
+
 label {
   font-weight: 500;
 }
