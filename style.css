@@ -43,7 +43,6 @@ a:hover {
 .forgotLinkContainer {
   float: left;
   width: 50%;
-  /*display: none;*/
 }
 
 .clearContainer {
@@ -75,7 +74,7 @@ input.invalid-input {
 }
 
 input.dirty-input.valid-input {
-  border-color: hsl(120, 75%, 50%);
+  border-color: hsl(120, 70%, 50%);
 }
 
 input.dirty-input.valid-input.empty-input {
@@ -83,9 +82,13 @@ input.dirty-input.valid-input.empty-input {
 }
 
 input#showPassword {
-  width: 23px;
-  margin: 0;
+  width: 15px;
+  margin: 0px;
+  border: 0px;
+  padding: 0px;
   vertical-align: middle;
+  position: relative;
+  left: -2px;
 }
 
 label#showPasswordLabel {
@@ -115,11 +118,10 @@ label {
 }
 
 .inputContainer {
-  margin-bottom: 5%;
+  margin-bottom: 1%;
 }
 
 .optional-field-notification {
-  /*font-weight: 300;*/
   font-size: 0.75em;
   color: gray;
 }
@@ -169,4 +171,61 @@ fieldset {
   border-top-color: hsl(190, 65%, 50%);
   border-top-width: 5px;
   border-width: 0px;
+}
+
+/* Social network logins */
+hr {
+  margin: 5% auto;
+}
+
+/* Validition message */
+i.valid-input-icon {
+  color: hsl(120, 70%, 50%);
+  font-size: 0.9em;
+  display: none;
+}
+
+i.invalid-input-icon {
+  color: red;
+  font-size: 0.9em;
+  display: none;
+}
+
+.invalid-input-message {
+  font-weight: 300;
+  font-size: 0.8em;
+  color: red;
+}
+
+.validation-message {
+  display: block;
+  /*text-align: center;*/
+}
+
+.valid-input-message-container,
+.invalid-input-message-container {
+  visibility: hidden;
+}
+
+@media only screen and (min-width: 768px) {
+  .invalid-input-message-container {
+    right: 17px;
+  }
+
+  .validation-message {
+    display: inline;
+    position: relative;
+    bottom: 25.5px;
+    left: 105%;
+    width: 250px;
+  }
+
+  .invalid-input-message {
+    margin-left: 1%;
+  }
+
+  i.valid-input-icon,
+  i.invalid-input-icon {
+    display: inline;
+  }
 }

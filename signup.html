@@ -4,6 +4,7 @@
     <title>Awesome Auth Portal</title>
     <link href="./style.css" rel='stylesheet' />
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,500" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   </head>
   <body>
     <section class='container'>
@@ -32,7 +33,19 @@
                        pattern='[\s\x27\x30-\x39\x2C-\x2E\x41-\x5A\x61-\x7A\xC0-\xD6\xD8-\xF6\xF8-\xFF\u0100-\uFFFF]+'
                        maxlength='100'
                        required />
-                <br>
+
+                <span class='validation-message'>
+                  <span class='valid-input-message-container bh'>
+                    <i class="fa fa-check valid-input-icon" aria-hidden="true"></i>
+                  </span>
+
+                  <span class='invalid-input-message-container bh'>
+                    <i class="fa fa-times invalid-input-icon" aria-hidden="true"></i>
+                    <span class='invalid-input-message'>
+                      Please enter a valid name.
+                    </span>
+                  </span>
+                </span>
               </div>
 
               <div class='labelContainer'>
@@ -47,7 +60,19 @@
                        pattern='[\s\x21\x26\x27\x30-\x39\x2C-\x2E\x41-\x5A\x61-\x7A\xC0-\xD6\xD8-\xF6\xF8-\xFF\u0100-\uFFFF]+'
                        maxlength='50'
                        class='optional' />
-                <br>
+
+                 <span class='validation-message'>
+                   <span class='valid-input-message-container'>
+                     <i class="fa fa-check valid-input-icon" aria-hidden="true"></i>
+                   </span>
+
+                   <span class='invalid-input-message-container'>
+                     <i class="fa fa-times invalid-input-icon" aria-hidden="true"></i>
+                     <span class='invalid-input-message'>
+                       Please enter a valid company name.
+                     </span>
+                   </span>
+                 </span>
               </div>
 
               <div class='labelContainer'>
@@ -59,7 +84,19 @@
                        form='signupForm'
                        name='email'
                        required />
-                <br>
+
+                 <span class='validation-message'>
+                   <span class='valid-input-message-container'>
+                     <i class="fa fa-check valid-input-icon" aria-hidden="true"></i>
+                   </span>
+
+                   <span class='invalid-input-message-container'>
+                     <i class="fa fa-times invalid-input-icon" aria-hidden="true"></i>
+                     <span class='invalid-input-message'>
+                       Please enter a valid email.
+                     </span>
+                   </span>
+                 </span>
               </div>
 
               <div class='labelContainer'>
@@ -71,20 +108,29 @@
                        form='signupForm'
                        name='password'
                        required />
+
+                 <span class='validation-message'>
+                   <span class='valid-input-message-container'>
+                     <i class="fa fa-check valid-input-icon" aria-hidden="true"></i>
+                   </span>
+
+                   <span class='invalid-input-message-container'>
+                     <i class="fa fa-times invalid-input-icon" aria-hidden="true"></i>
+                     <span class='invalid-input-message'>
+                       Please enter a valid password.
+                     </span>
+                   </span>
+                 </span>
               </div>
 
               <div class='inputContainer'>
                 <input id='showPassword' type='checkbox' />
-                <label id='showPasswordLabel'>
+                <label id='showPasswordLabel' for='showPassword'>
                   Show Password
                 </label>
               </div>
 
-              <button type='submit' form='signupForm' class='btn'>Sign Up</button>
-
               <div class='row'>
-                <!-- <div class='optionLinkContainer clearContainer'></div> -->
-
                 <div class='optionLinkContainer forgotLinkContainer'>
                   <a href='#' class='forgotPasswordLink'>Forgot Password?</a>
                 </div>
@@ -94,6 +140,9 @@
                 </div>
               </div>
 
+              <button type='submit' form='signupForm' class='btn'>Sign Up</button>
+
+              <hr>
             </div>
           </fieldset>
         </form>
