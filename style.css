@@ -30,9 +30,10 @@ a:hover {
   text-decoration: underline;
 }
 
-.optionLinkContainer {
-  display: inline-block;
-  width: 100%;
+#navLinkContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .signupLinkContainer {
@@ -83,12 +84,9 @@ input.dirty-input.valid-input.empty-input {
 
 input#showPassword {
   width: 15px;
-  margin: 0px;
-  border: 0px;
-  padding: 0px;
+  margin-left: 0px;
+  margin-right: 5px;
   vertical-align: middle;
-  position: relative;
-  left: -2px;
 }
 
 label#showPasswordLabel {
@@ -199,7 +197,6 @@ i.invalid-input-icon {
 
 .validation-message {
   display: block;
-  /*text-align: center;*/
 }
 
 .valid-input-message-container,
@@ -228,4 +225,18 @@ i.invalid-input-icon {
   i.invalid-input-icon {
     display: inline;
   }
+}
+
+/* Caps lock */
+#capsLockNotificationContainer {
+  font-weight: 300;
+  font-size: 0.8em;
+  color: orange;
+  visibility: hidden;
+}
+
+#showPasswordAndCapsLockNotificationContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

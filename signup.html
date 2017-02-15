@@ -123,26 +123,33 @@
                  </span>
               </div>
 
-              <div class='inputContainer'>
-                <input id='showPassword' type='checkbox' />
-                <label id='showPasswordLabel' for='showPassword'>
-                  Show Password
-                </label>
+              <div id='showPasswordAndCapsLockNotificationContainer' class='inputContainer'>
+                <span id='showPasswordContainer'>
+                  <input id='showPassword' type='checkbox' />
+                  <label id='showPasswordLabel'>
+                    <!-- adding a for attribute here disables the clickOnLabelToCheckTheBox event -->
+                    Show Password
+                  </label>
+                </span>
+                <span id='capsLockNotificationContainer'>
+                  <i id='capsLockNotificationIcon' class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                  <span id='capsLockNotification'>Caps Lock is on</span>
+                </span>
               </div>
 
-              <div class='row'>
-                <div class='optionLinkContainer forgotLinkContainer'>
-                  <a href='#' class='forgotPasswordLink'>Forgot Password?</a>
-                </div>
+              <div id='navLinkContainer' class='row'>
+                <!-- <div class='navLinkContainer forgotLinkContainer'> -->
+                  <a class='nav-link' href='#' class='forgotPasswordLink'>Forgot Password?</a>
+                <!-- </div> -->
 
-                <div class='optionLinkContainer signupLinkContainer'>
-                  <a href='/login' id='loginLink'>Log In!</a>
-                </div>
+                <!-- <div class='navLinkContainer signupLinkContainer'> -->
+                  <a class='nav-link' href='/login' id='loginLink'>Log In!</a>
+                <!-- </div> -->
               </div>
 
               <button type='submit' form='signupForm' class='btn'>Sign Up</button>
 
-              <hr>
+              <!-- <hr> -->
             </div>
           </fieldset>
         </form>
