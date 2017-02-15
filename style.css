@@ -10,11 +10,11 @@ body {
   margin: 5% auto;
 }
 
-@media only screen and (min-width: 320px) { .col-8.formContainer { width: 100%; }}
-@media only screen and (min-width: 600px) { .col-8.formContainer { width: 87.33%; }}
-@media only screen and (min-width: 768px) { .col-8.formContainer { width: 38%; }}
-@media only screen and (min-width: 1152px) { .col-8.formContainer { width: 25.33%; }}
-@media only screen and (min-width: 2016px) { .col-8.formContainer { width: 12.66%; }}
+@media only screen and (min-width: 320px) { .col-8.form-container { width: 100%; }}
+@media only screen and (min-width: 600px) { .col-8.form-container { width: 87.33%; }}
+@media only screen and (min-width: 768px) { .col-8.form-container { width: 38%; }}
+@media only screen and (min-width: 1152px) { .col-8.form-container { width: 25.33%; }}
+@media only screen and (min-width: 2016px) { .col-8.form-container { width: 12.66%; }}
 
 /* Links */
 a {
@@ -30,23 +30,23 @@ a:hover {
   text-decoration: underline;
 }
 
-#navLinkContainer {
+.nav-link-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.signupLinkContainer {
+.signup-link-container {
   text-align: right;
   width: 50%;
 }
 
-.forgotLinkContainer {
+.forgot-link-container {
   float: left;
   width: 50%;
 }
 
-.clearContainer {
+.clear-container {
   clear: both;
   height: 0%;
 }
@@ -82,16 +82,16 @@ input.dirty-input.valid-input.empty-input {
   border-color: hsl(0, 0%, 85%);
 }
 
-input#showPassword {
+input.show-password {
   width: 15px;
   margin-left: 0px;
   margin-right: 5px;
   vertical-align: middle;
+  position: relative;
+  bottom: 1.5px;
 }
 
-label#showPasswordLabel {
-  position: relative;
-  top: 1.5px;
+label.show-password-label {
   font-weight: 300;
 }
 
@@ -111,11 +111,11 @@ label {
   font-weight: 300;
 }
 
-.labelContainer {
+.label-container {
   margin-bottom: 2%;
 }
 
-.inputContainer {
+.input-container {
   margin-bottom: 1%;
 }
 
@@ -228,14 +228,14 @@ i.invalid-input-icon {
 }
 
 /* Caps lock */
-#capsLockNotificationContainer {
+.caps-lock-notification-container {
   font-weight: 300;
   font-size: 0.8em;
   color: orange;
   visibility: hidden;
 }
 
-#showPasswordAndCapsLockNotificationContainer {
+.show-password-and-caps-lock-notification-container {
   display: flex;
   justify-content: space-between;
   align-items: center;

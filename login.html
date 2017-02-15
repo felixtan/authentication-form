@@ -7,8 +7,8 @@
   </head>
   <body>
     <section class='container'>
-      <div class='row col-8 formContainer'>
-        <form id='loginForm'
+      <div class='row col-8 form-container'>
+        <form id='login-form'
               class='form'
               method='post'
               action='/login'
@@ -20,50 +20,84 @@
             </legend>
 
             <div class='row col-8'>
-              <div class='labelContainer'>
-                <label for='loginEmail'>Email</label>
+
+              <div class='label-container'>
+                <label for='login-email'>Email</label>
               </div>
-              <div class='inputContainer'>
-                <input id='loginEmail'
+              <div class='input-container'>
+                <input id='login-email'
                        type='email'
-                       form='loginForm'
+                       form='login-form'
                        name='email'
+                       maxlength='50'
                        required/>
-                <br>
+
+                 <span class='validation-message'>
+                   <span class='valid-input-message-container'>
+                     <i class="fa fa-check valid-input-icon" aria-hidden="true"></i>
+                   </span>
+
+                   <span class='invalid-input-message-container'>
+                     <i class="fa fa-times invalid-input-icon" aria-hidden="true"></i>
+                     <span class='invalid-input-message'>
+                       Please enter a valid email.
+                     </span>
+                   </span>
+                 </span>
               </div>
 
-              <div class='labelContainer'>
-                <label for='loginPassword'>Password</label>
+              <div class='label-container'>
+                <label for='login-password'>Password</label>
               </div>
-              <div class='inputContainer'>
-                <input id='loginPassword'
+              <div class='input-container'>
+                <input id='login-password'
+                       class='password-input'
                        type='password'
-                       form='loginForm'
+                       form='login-form'
                        name='password'
                        required />
+
+                 <span class='validation-message'>
+                   <span class='valid-input-message-container'>
+                     <i class="fa fa-check valid-input-icon" aria-hidden="true"></i>
+                   </span>
+
+                   <span class='invalid-input-message-container'>
+                     <i class="fa fa-times invalid-input-icon" aria-hidden="true"></i>
+                     <span class='invalid-input-message'>
+                       Please enter a valid password.
+                     </span>
+                   </span>
+                 </span>
+              </div>
+
+              <div class='input-container show-password-and-caps-lock-notification-container'>
+                <span class='show-password-container'>
+                  <label for='login-show-password' class='show-password-label'>
+                    <input id='login-show-password' class='show-password' type='checkbox' />
+                    Show Password
+                  </label>
+                </span>
+                <span class='caps-lock-notification-container'>
+                  <i class="fa fa-exclamation-triangle caps-lock-notification-icon" aria-hidden="true"></i>
+                  <span class='caps-lock-notification'>Caps Lock is on</span>
+                </span>
               </div>
             </div>
 
-            <div class='row col-8'>
-              <button type='submit' form='loginForm' class='btn'>Login</button>
-              <div class='row'>
-                <!-- <div class='optionLinkContainer clearContainer'></div> -->
-
-                <div class='optionLinkContainer forgotLinkContainer'>
-                  <a href='#' class='forgotPasswordLink'>Forgot Password?</a>
-                </div>
-
-                <div class='optionLinkContainer signupLinkContainer'>
-                  <a href='/signup' id='signupLink'>Sign Up!</a>
-                </div>
-
-              </div>
+            <div class='row nav-link-container'>
+              <a href='#' class='nav-link'>Forgot Password?</a>
+              <a href='/signup'  class='nav-link' id='signupLink'>Sign Up!</a>
             </div>
+
+            <button type='submit' form='login-form' class='btn'>Login</button>
+
           </fieldset>
         </form>
       </div>
     </section>
 
     <script src='./events.js' type='text/javascript'></script>
+    <script src='./helpers.js' type='text/javascript'></script>
   </body>
 </html>
