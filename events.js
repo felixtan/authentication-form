@@ -33,14 +33,14 @@
         input.focus()
       }
 
-      const validationMessageContainer = document.querySelector(`input + span.validation-message`)
+      const validationMessageContainer = document.querySelector(`input#${input.id} + span.validation-message`)
       const label = document.querySelector(`label[for=${input.id}]`)
 
       // Skip show password checkbox
       if (validationMessageContainer === null) continue
 
-      const validMessageContainer = validationMessageContainer.children[0]
-      const invalidMessageContainer = validationMessageContainer.children[1]
+      const validMessage = validationMessageContainer.children[0]
+      const invalidMessage = validationMessageContainer.children[1]
 
       input.addEventListener('focusout', () => {
         const valid = input.validity.valid
@@ -50,20 +50,20 @@
           if (!valid) {
             input.classList.remove('valid-input')
             input.classList.add('invalid-input')
-            invalidMessageContainer.style.visibility = 'visible'
-            validMessageContainer.style.visibility = 'hidden'
+            invalidMessage.style.visibility = 'visible'
+            validMessage.style.visibility = 'hidden'
             label.style.color = 'red'
           } else {
             input.classList.remove('invalid-input')
             input.classList.add('valid-input')
-            invalidMessageContainer.style.visibility = 'hidden'
-            validMessageContainer.style.visibility = 'visible'
+            invalidMessage.style.visibility = 'hidden'
+            validMessage.style.visibility = 'visible'
             label.style.color = 'black'
           }
 
           if (input.classList.contains('empty-input') && input.classList.contains('optional')) {
-            invalidMessageContainer.style.visibility = 'hidden'
-            validMessageContainer.style.visibility = 'hidden'
+            invalidMessage.style.visibility = 'hidden'
+            validMessage.style.visibility = 'hidden'
           }
         }
       })
