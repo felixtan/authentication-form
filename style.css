@@ -149,6 +149,10 @@ label {
 
 /* Buttons */
 .btn {
+  cursor: pointer;
+}
+
+.btn.submit {
   height: 40px;
   width: 100%;
   display: inline-block;
@@ -264,4 +268,20 @@ i.invalid-input-icon {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+/* Login error message */
+#login-error-message {
+  background-color: hsl(0, 100%, 60%);
+  color: white;
+  font-weight: 300;
+  padding: 20px;
+  border-radius: 3px;
+  position: relative;
+}
+
+#close-login-error-message {
+  position: absolute;
+  bottom: 74%;
+  left: 96%;
 }

@@ -85,4 +85,17 @@
       })
     }
   }
+
+  if (form.id === 'login-form') {
+    const loginErrorMsg = document.getElementById('login-error-message')
+    const closeLoginErrorMsgBtn = document.getElementById('close-login-error-message')
+    const emailLabelContainer = document.querySelector('div.label-container')
+
+    if (loginErrorMsg !== null && loginErrorMsg !== undefined) {
+      closeLoginErrorMsgBtn.addEventListener('click', () => {
+        loginErrorMsg.style.display = 'none'
+        emailLabelContainer.style.marginTop = '15px'
+      })
+    }
+  }
 })()
