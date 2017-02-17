@@ -19,11 +19,12 @@ const PORT = 3000
 
 // Messages
 const failedAttemptMessage = 'The email or password you entered did not match our records. Please double-check and try again.'
-const serverErrorMessage = 'HTTP 500 Internal Server Error\nPlease contact the authorities.'
+const serverErrMessage = 'Internal Server Error\nPlease contact the authorities.'
 
 // Templating
 app.engine('hbs', hbs.express4({
-  partialsDir: __dirname + '/views/partials'
+  partialsDir: __dirname + '/views/partials',
+  defaultLayout: __dirname + '/views/template.hbs'
 }));
 app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');
@@ -38,7 +39,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/login', (req, res) => {
-  return res.render('login', { loginError: false })
+  return res.render('login', { loginErr: false })
 })
 
 app.post('/login', (req, res) => {
@@ -50,27 +51,31 @@ app.post('/login', (req, res) => {
     storedPassword = result.values[0][0]
   } catch (err) {
     if (result === undefined && storedPassword === null) {
-      return res.render('login', { loginError: true, loginErrorMessage: failedAttemptMessage })
+      return res.render('login', { loginErr: true, loginErrMessage: failedAttemptMessage }, (err, html) => {
+        res.cookie('showLoginErrMsg', true)
+        console.log('called')
+        res.send(html)
+      })
     } else {
       // TODO: log this to server logs
-      return res.render('login', { loginError: true, loginErrorMessage: serverErrorMessage })
+      return res.render('login', { loginErr: true, loginErrMessage: serverErrMessage })
     }
   }
 
   if (result === undefined && storedPassword === null) {
-    return res.render('login', { loginError: true, loginErrorMessage: failedAttemptMessage })
+    return res.render('login', { loginErr: true, loginErrMessage: failedAttemptMessage })
   } else {
     try {
       bcrypt.compare(encodeURIComponentEnhanced(req.body.password), storedPassword, (err, match) => {
         if (match) {
           return res.render('index')
         } else {
-          return res.render('login', { loginError: true, loginErrorMessage: failedAttemptMessage })
+          return res.render('login', { loginErr: true, loginErrMessage: failedAttemptMessage })
         }
       })
     } catch (err) {
       // TODO: log this to server logs
-      return res.render('login', { loginError: true, loginErrorMessage: serverErrorMessage })
+      return res.render('login', { loginErr: true, loginErrMessage: serverErrMessage })
     }
   }
 })
@@ -93,10 +98,10 @@ app.post('/signup', (req, res) => {
       })
       insertUserStatement.step()
 
-      return res.render('login')
+      return res.render('index')
     })
   } catch (err) {
-    return res.render('signup')
+    return res.render('signup', { signupErr: true, signupErrMsg: serverErrMessage })
   }
 })
 

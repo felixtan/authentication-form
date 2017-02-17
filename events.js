@@ -87,14 +87,23 @@
   }
 
   if (form.id === 'login-form') {
-    const loginErrorMsg = document.getElementById('login-error-message')
-    const closeLoginErrorMsgBtn = document.getElementById('close-login-error-message')
+    const loginErrorMsg = document.getElementById('login-err-message')
+    const closeLoginErrorMsgBtn = document.getElementById('close-login-err-message')
     const emailLabelContainer = document.querySelector('div.label-container')
+
+    // if (sessionStorage.showErrMsgs === 'false') {
+    //   console.log('dont')
+    //   document.addEventListener('DOMContentLoaded', () => {
+    //     console.log('domcontentloaded')
+    //     loginErrorMsg.style.display = 'none'
+    //   })
+    // }
 
     if (loginErrorMsg !== null && loginErrorMsg !== undefined) {
       closeLoginErrorMsgBtn.addEventListener('click', () => {
         loginErrorMsg.style.display = 'none'
         emailLabelContainer.style.marginTop = '15px'
+        // sessionStorage.showLoginErrMsg = 'false'
       })
     }
   }
