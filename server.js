@@ -35,10 +35,12 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(printRequestMiddleware)
 
 app.get('/', (req, res) => {
+  app.locals.index = true
   return res.render('index')
 })
 
 app.get('/login', (req, res) => {
+  app.locals.login = true
   return res.render('login', { loginErr: false })
 })
 
@@ -50,12 +52,9 @@ app.post('/login', (req, res) => {
     result = db.exec(`SELECT password FROM users WHERE email=${JSON.stringify(encodeURIComponent(req.body.email))} LIMIT 1`)[0]
     storedPassword = result.values[0][0]
   } catch (err) {
+    app.locals.signup = true
     if (result === undefined && storedPassword === null) {
-      return res.render('login', { loginErr: true, loginErrMessage: failedAttemptMessage }, (err, html) => {
-        res.cookie('showLoginErrMsg', true)
-        console.log('called')
-        res.send(html)
-      })
+      return res.render('login', { loginErr: true, loginErrMessage: failedAttemptMessage })
     } else {
       // TODO: log this to server logs
       return res.render('login', { loginErr: true, loginErrMessage: serverErrMessage })
@@ -63,17 +62,21 @@ app.post('/login', (req, res) => {
   }
 
   if (result === undefined && storedPassword === null) {
+    app.locals.login = true
     return res.render('login', { loginErr: true, loginErrMessage: failedAttemptMessage })
   } else {
     try {
       bcrypt.compare(encodeURIComponentEnhanced(req.body.password), storedPassword, (err, match) => {
         if (match) {
+          app.locals.index = true
           return res.render('index')
         } else {
+          app.locals.login = true
           return res.render('login', { loginErr: true, loginErrMessage: failedAttemptMessage })
         }
       })
     } catch (err) {
+      app.locals.login = true
       // TODO: log this to server logs
       return res.render('login', { loginErr: true, loginErrMessage: serverErrMessage })
     }
@@ -81,6 +84,7 @@ app.post('/login', (req, res) => {
 })
 
 app.get('/signup', (req, res) => {
+  app.locals.signup = true
   return res.render('signup')
 })
 
@@ -98,9 +102,11 @@ app.post('/signup', (req, res) => {
       })
       insertUserStatement.step()
 
+      app.locals.index = true
       return res.render('index')
     })
   } catch (err) {
+    app.locals.signup = true
     return res.render('signup', { signupErr: true, signupErrMsg: serverErrMessage })
   }
 })

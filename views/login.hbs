@@ -11,10 +11,12 @@
       </legend>
 
       {{#loginErr}}
-      <p id='login-err-message'>
-        <i id='close-login-err-message' class="btn fa fa-times" aria-hidden="true"></i>
-        {{loginErrMessage}}
-      </p>
+      <div id='login-err-message-container'>
+        <span id='close-login-err-message-container'>
+          <i id='close-login-err-message' class="btn fa fa-times" aria-hidden="true"></i>
+        </span>
+        <p id='login-err-message'>{{loginErrMessage}}</p>
+      </div>
       {{/loginErr}}
 
       <div class='label-container'>
