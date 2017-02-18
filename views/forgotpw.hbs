@@ -1,0 +1,47 @@
+<div class='row col-8 form-container'>
+  <form id='forgotpw-form'
+        class='form'
+        method='get'
+        action='/forgotpw'
+        spellcheck="false">
+        <!-- method='post' -->
+    <fieldset>
+      <legend>
+        <h1>What? Again?</h1>
+      </legend>
+
+      <div class='label-container'>
+        <label for='forgotpw-email'>Email</label>
+      </div>
+      <div class='input-container'>
+        <input id='forgotpw-email'
+               type='email'
+               form='forgotpw-form'
+               name='email'
+               maxlength='50'
+               required/>
+
+         <span class='validation-message'>
+           <span class='valid-input-message-container'>
+             <i class="fa fa-check valid-input-icon" aria-hidden="true"></i>
+           </span>
+
+           <span class='invalid-input-message-container'>
+             <i class="fa fa-times invalid-input-icon" aria-hidden="true"></i>
+             <span class='invalid-input-message'>
+               Please enter a valid email.
+             </span>
+           </span>
+         </span>
+      </div>
+
+      <div class='nav-link-container'>
+        <a href='/login' class='nav-link'>Log In.</a>
+        <a href='/signup'  class='nav-link' id='signupLink'>Sign Up!</a>
+      </div>
+
+      <button type='submit' form='forgotpw-form' class='btn submit'>Submit</button>
+
+    </fieldset>
+  </form>
+</div>

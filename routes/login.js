@@ -1,5 +1,6 @@
 module.exports = (app, db) => {
 
+  const encodeURIComponentEnhanced = require('../scripts/helpers').encodeURIComponentEnhanced
   const router = require('express').Router({ caseSensitive: true })
   const bcrypt = require('bcrypt')
   const saltRounds = 10
