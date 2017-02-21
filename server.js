@@ -37,6 +37,7 @@ app.use('/', routers.home)
 app.use('/signup', routers.signup)
 app.use('/login', routers.login)
 app.use('/forgotpw', routers.forgotpw)
+app.use('/logout', routers.logout)
 
 app.listen(PORT)
 

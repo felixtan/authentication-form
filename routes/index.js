@@ -3,7 +3,8 @@ module.exports = (app, db, passport) => {
     signup    :  getRouter('signup'),
     login     :  getRouter('login'),
     forgotpw  :  getRouter('forgotpw'),
-    home      :  getRouter('home')
+    home      :  getRouter('home'),
+    logout    :  getRouter('logout')
   }
 
   function getRouter(view) {

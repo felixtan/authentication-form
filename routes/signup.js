@@ -1,10 +1,6 @@
 module.exports = (app, db, passport) => {
 
   const router = require('express').Router({ caseSensitive: true })
-  const bcrypt = require('bcrypt')
-  const saltRounds = 10
-  const encodeURIComponentEnhanced = require('../scripts/helpers').encodeURIComponentEnhanced
-  const serverErrorMessage = require('../scripts/helpers').messages.serverErrorMessage
 
   router.get('/', (req, res) => {
     return res.render('signup')
@@ -28,16 +24,14 @@ module.exports = (app, db, passport) => {
       // Auth failure
       if (!user) {
         return res.render('signup', renderOpts, (err, html) => {
-          // console.log(html)
           return res.status(info.status).send(html)
         })
       } else {
+      // Auth success
         return req.logIn(user, err => {
           if (err) return next(err)
 
-          res.render('home', renderOpts, (err, html) => {
-            return res.send(html)
-          })
+          return res.redirect('/')
         })
       }
 

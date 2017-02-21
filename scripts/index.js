@@ -5,6 +5,11 @@
     const inputs = document.getElementsByTagName('input')
 
     /**
+     *  Event handler for closing error message 
+     */
+    window.helpers.setUpCloseErrorMessageIcon()
+
+    /**
      * Submit on pressing enter/return
      */
     if (form !== null && form !== undefined) {

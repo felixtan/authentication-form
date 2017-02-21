@@ -4,8 +4,12 @@
     const form = document.getElementById('signup-form')
 
     if (form.id === 'signup-form') {
+
       const inputs = document.getElementsByTagName('input')
 
+      /**
+       *  Attach validation event handlers
+       */
       for (let i = 0; i < inputs.length; i++) {
         const input = inputs[i]
 
@@ -64,7 +68,6 @@
       /**
       * Form submission
       */
-
       const submitBtn = document.querySelector('button.btn.submit')
 
       submitBtn.addEventListener('click', submit)
@@ -79,9 +82,7 @@
             data: window.helpers.getFormData(inputs),
           })
           .done((data, textStatus, jqXHR) => {
-            if (jqXHR.status === 201) {
-              location = '/'
-            }
+            // TODO: log the activity
           })
           .fail((jqXHR, textStatus, errorThrown) => {
             if (jqXHR.responseText) {
@@ -95,7 +96,5 @@
         }
       }
     }
-
-    window.helpers.setUpCloseErrorMessageIcon()
   })
 })()

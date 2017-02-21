@@ -1,8 +1,8 @@
 (() => {
   document.addEventListener('DOMContentLoaded', () => {
+
     const form = document.getElementById('login-form')
 
-    // Prevent attaching multiple event listeners to the same elements
     if (form.id === 'login-form') {
 
       const inputs = document.getElementsByTagName('input')
@@ -19,13 +19,11 @@
             data: window.helpers.getFormData(inputs),
           })
           .done((data, textStatus, jqXHR) => {
-            if (jqXHR.status === 200) {
-              location = '/'
-            }
+            // TODO: log the activity
           })
           .fail((jqXHR, textStatus, errorThrown) => {
+            // Render the error message
             if (jqXHR.responseText) {
-              // document.querySelector('section.container').innerHtml = jqXHR.responseText
               document.querySelector('html').innerHtml = jqXHR.responseText
               window.helpers.setUpCloseErrorMessageIcon()
             }
@@ -35,9 +33,6 @@
           })
         }
       }
-
-      // This function won't be called in ajax callback on refresh
-      window.helpers.setUpCloseErrorMessageIcon()
     }
   })
 })()
