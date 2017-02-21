@@ -152,7 +152,7 @@ label {
   cursor: pointer;
 }
 
-button[type="submit"] {
+button.btn.submit {
   height: 40px;
   width: 100%;
   border-radius: 3px;
@@ -267,7 +267,7 @@ i.invalid-input-icon {
 }
 
 /* Login error message */
-#login-err-message-container {
+.err-message-container {
   background-color: hsl(0, 100%, 60%);
   color: white;
   border-radius: 3px;
@@ -275,18 +275,18 @@ i.invalid-input-icon {
   position: relative;
 }
 
-#login-err-message {
+.err-message {
   padding: 10px 15px 10px 10px;
 }
 
-#close-login-err-message-container {
+.close-err-message-container {
   position: absolute;
   width: 100%;
   display: flex;
   justify-content: flex-end;
 }
 
-#close-login-err-message {
+.close-err-message {
   margin-top: 2px;
   margin-right: 4px;
 }

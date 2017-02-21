@@ -1,10 +1,11 @@
-module.exports = (app) => {
+module.exports = (app, db, passport) => {
 
   const router = require('express').Router({ caseSensitive: true })
+  const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn
 
-  router.get('/', (req, res) => {
-    app.locals.index = true
-    return res.render('index')
+  // ensureLoggedIn('/login'),
+  router.get('/', ensureLoggedIn(), (req, res) => {
+    res.render('home')
   })
 
   return router

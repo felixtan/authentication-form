@@ -1,38 +1,66 @@
-module.exports = (app, db) => {
+module.exports = (app, db, passport) => {
 
-  const encodeURIComponentEnhanced = require('../scripts/helpers').encodeURIComponentEnhanced
   const router = require('express').Router({ caseSensitive: true })
   const bcrypt = require('bcrypt')
-
-  // db
-  const insertUserStatement = db.prepare('INSERT INTO users VALUES (:name, :company, :email, :password);')
+  const saltRounds = 10
+  const encodeURIComponentEnhanced = require('../scripts/helpers').encodeURIComponentEnhanced
+  const serverErrorMessage = require('../scripts/helpers').messages.serverErrorMessage
 
   router.get('/', (req, res) => {
-    app.locals.signup = true
     return res.render('signup')
   })
 
-  router.post('/', (req, res) => {
-    try {
-      bcrypt.hash(encodeURIComponentEnhanced(req.body.password), saltRounds, (err, hash) => {
-        if (err) throw err
+  router.post('/', (req, res, next) => {
+    passport.authenticate('local-signup', (err, user, info) => {
+      const renderOpts = {
+        error: true,
+        status: info.status,
+        errorMessage: info.clientMessage
+      }
 
-        insertUserStatement.bind({
-          ':name': encodeURIComponent(req.body.fullName),
-          ':company': encodeURIComponent(req.body.companyName),
-          ':email': encodeURIComponent(req.body.email),
-          ':password': hash
+      // Sever exception
+      if (err) {
+        return res.render('signup', renderOpts, (err, html) => {
+          return res.status(info.status).send(html)
         })
-        insertUserStatement.step()
+      }
 
-        app.locals.index = true
-        return res.render('index')
-      })
-    } catch (err) {
-      app.locals.signup = true
-      return res.render('signup', { signupErr: true, signupErrMsg: serverErrMessage })
-    }
+      // Auth failure
+      if (!user) {
+        return res.render('signup', renderOpts, (err, html) => {
+          // console.log(html)
+          return res.status(info.status).send(html)
+        })
+      } else {
+        return req.logIn(user, err => {
+          if (err) return next(err)
+
+          res.render('home', renderOpts, (err, html) => {
+            return res.send(html)
+          })
+        })
+      }
+
+    })(req, res, next)
   })
 
   return router
+}
+
+function SQLError(message) {
+  this.name = 'SQLError'
+  this.message = message || 'Failed to execute INSERT query on new user'
+  this.stack = (new Error()).stack;
+}
+
+function EncryptionError(message) {
+  this.name = 'EncryptionError'
+  this.message = message || 'Encryption Error'
+  this.stack = (new Error()).stack;
+}
+
+function RedirectError(message) {
+  this.name = 'RedirectError'
+  this.message = message || 'Redirect Error'
+  this.stack = (new Error()).stack;
 }

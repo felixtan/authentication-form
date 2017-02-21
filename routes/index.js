@@ -1,4 +1,4 @@
-module.exports = (app, db) => {
+module.exports = (app, db, passport) => {
   return {
     signup    :  getRouter('signup'),
     login     :  getRouter('login'),
@@ -7,7 +7,6 @@ module.exports = (app, db) => {
   }
 
   function getRouter(view) {
-    // return require(`./routes/${view}.js`)(app, db)
-    return require(`${__dirname}/${view}.js`)(app, db)
+    return require(`${__dirname}/${view}.js`)(app, db, passport)
   }
 }
