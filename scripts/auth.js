@@ -1,5 +1,5 @@
 module.exports = (db) => {
-  
+
   const passport = require('passport')
   const Strategy = require('passport-local').Strategy
   const bcrypt = require('bcrypt')
@@ -28,14 +28,14 @@ module.exports = (db) => {
   }, (req, email, password, cb) => {
 
     // User is already authenticated
-    if (req.user !== undefined && req.user !== null && encodeURIComponent(email) === req.user.email) {
-      return cb(null, req.user, {
-        status: 200,
-        error: false,
-        clientMessage: 'You are already logged in!',
-        serverMessage: `User ${req.user.email} tried to log in but was already authenticated.`
-      })
-    }
+    // if (req.user !== undefined && req.user !== null && encodeURIComponent(email) === req.user.email) {
+    //   return cb(null, req.user, {
+    //     status: 200,
+    //     error: false,
+    //     clientMessage: 'You are already logged in!',
+    //     serverMessage: `User ${req.user.email} tried to log in but was already authenticated.`
+    //   })
+    // }
 
     let user = null
     try {
