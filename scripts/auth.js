@@ -27,16 +27,6 @@ module.exports = (db) => {
     passReqToCallback : true
   }, (req, email, password, cb) => {
 
-    // User is already authenticated
-    // if (req.user !== undefined && req.user !== null && encodeURIComponent(email) === req.user.email) {
-    //   return cb(null, req.user, {
-    //     status: 200,
-    //     error: false,
-    //     clientMessage: 'You are already logged in!',
-    //     serverMessage: `User ${req.user.email} tried to log in but was already authenticated.`
-    //   })
-    // }
-
     let user = null
     try {
       user = db.exec(`SELECT * FROM users WHERE email=${JSON.stringify(encodeURIComponent(email))} LIMIT 1`)[0]
