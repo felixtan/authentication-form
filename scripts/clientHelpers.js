@@ -34,9 +34,11 @@
         // displaying after a refresh
         const form = document.getElementsByTagName('form')[0]
         if (form.id === 'login-form') {
-          window.location ='http://localhost:3000/login'
+          window.location ='https://localhost:3001/login'
         } else if (form.id === 'signup-form') {
-          window.location ='http://localhost:3000/signup'
+          window.location ='https://localhost:3001/signup'
+        } else if (form.id === 'forgotpw-form') {
+          window.location ='https://localhost:3001/password-recovery/stage1'
         }
       })
     }

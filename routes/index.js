@@ -1,10 +1,11 @@
 module.exports = (app, db, passport) => {
   return {
-    signup    :  getRouter('signup'),
-    login     :  getRouter('login'),
-    forgotpw  :  getRouter('forgotpw'),
-    home      :  getRouter('home'),
-    logout    :  getRouter('logout')
+    signup                  :  getRouter('signup'),
+    login                   :  getRouter('login'),
+    passwordRecoveryStage1  :  getRouter('passwordRecovery/stage1'),
+    passwordRecoveryStage2  :  getRouter('passwordRecovery/stage2'),
+    home                    :  getRouter('home'),
+    logout                  :  getRouter('logout')
   }
 
   function getRouter(view) {

@@ -6,104 +6,142 @@ module.exports = (db) => {
   const saltRounds = 10
   const encodeURIComponentEnhanced = require('./helpers').encodeURIComponentEnhanced
   const errorMessages = require('./helpers').messages
+  const getUserByEmail = require('./helpers').getUserByEmail
 
   passport.serializeUser((user, cb) => {
+
     cb(null, user.email)
+
   })
 
   passport.deserializeUser((email, cb) => {
-    const user = db.exec(`SELECT * FROM users WHERE email=${JSON.stringify(email)} LIMIT 1`)[0]
 
-    if (user === null && user === undefined) {
+    // Check here, if getting Error: Failed to deserialize user out of session
+    const user = getUserByEmail(db, email)
+
+    if (user === null || user === undefined) {
+
       cb(new Error('user not found'))
+
     } else {
-      cb(null, prettifyUser(user))
+
+      cb(null, user)
+
     }
+
   })
 
   passport.use('local-login', new Strategy({
+
     usernameField: 'email',
     passwordField: 'password',
     passReqToCallback : true
+
   }, (req, email, password, cb) => {
 
     let user = null
+
     try {
-      user = db.exec(`SELECT * FROM users WHERE email=${JSON.stringify(encodeURIComponent(email))} LIMIT 1`)[0]
-      user = prettifyUser(user)
+
+      user = getUserByEmail(db, email)
 
       try {
+
         bcrypt.compare(encodeURIComponentEnhanced(password), user.password, (err, match) => {
+
           if (match) {
+
             return cb(null, user, {
               status: 200,
               error: false,
               clientMessage: 'Successful login',
               serverMessage: `Successful login for ${user.email}`
             })
+
           } else {
+
             return cb(null, false, {
               status: 401,
               clientMessage: errorMessages.failedAttemptMessage,
               serverMessage: 'Password did not match.'
             })
+
           }
+
         })
+
       } catch (err) {
+
         // TODO: log this to server logs
         if (user === null || user === undefined) {
+
           return cb(null, false, {
             error: true,
             status: 404,
             clientMessage: errorMessages.failedAttemptMessage,
             serverMessage: 'Email not found in db.'
           })
+
         } else {
+
           return cb(err, false, {
             error: true,
             status: 500,
             clientMessage: errorMessages.serverErrorMessage,
             serverMessage: err
           })
+
         }
+
       }
 
     } catch (err) {
-        return cb(err, false, {
-          error: true,
-          status: 500,
-          clientMessage: errorMessages.serverErrorMessage,
-          serverMessage: err
-        })
+
+      return cb(err, false, {
+        error: true,
+        status: 500,
+        clientMessage: errorMessages.serverErrorMessage,
+        serverMessage: err
+      })
+
     }
+
   }))
 
   passport.use('local-signup', new Strategy({
+
     usernameField: 'email',
     passwordField: 'password',
     passReqToCallback : true
+
   }, (req, email, password, cb) => {
 
-    const checkUser = db.exec(`SELECT * FROM users WHERE email=${JSON.stringify(encodeURIComponent(email))} LIMIT 1`)[0]
+    const checkUser = getUserByEmail(db, email)
 
     if (checkUser !== null && checkUser !== undefined) {
+
       return cb(null, false, {
         error: true,
         status: 409,
         clientMessage: errorMessages.emailAlreadyExists,
         serverMessage: `Email ${email} already exists in the database.`
       })
+
     }
 
     try {
+
       bcrypt.hash(encodeURIComponentEnhanced(password), saltRounds, (err, hash) => {
+
         if (err) {
+
           return cb(err, false, {
             error: true,
             status: 500,
             clientMessage: errorMessages.serverErrorMessage,
             serverMessage: `bcrypt.hash returned error: ${err}`
           })
+
         }
 
         const user = {
@@ -113,6 +151,7 @@ module.exports = (db) => {
         }
 
         try {
+
           const insertUserStatement = db.prepare('INSERT INTO users VALUES (:name, :company, :email, :password);')
 
           insertUserStatement.bind({
@@ -132,36 +171,30 @@ module.exports = (db) => {
           })
 
         } catch (err) {
+
           return cb(err, false, {
             error: true,
             status: 500,
             clientMessage: errorMessages.serverErrorMessage,
             serverMessage: `Error inserting user into db: ${err}`
           })
+
         }
 
       })
 
     } catch (err) {
+
       return cb(err, false, {
         error: true,
         status: 500,
         clientMessage: errorMessages.serverErrorMessage,
         serverMessage: err
       })
+
     }
+
   }))
 
   return passport
-
-  // Does not decode user data
-  function prettifyUser (userFromDb) {
-    if (userFromDb === null || userFromDb === undefined) return userFromDb
-
-    const data = {}
-    userFromDb.columns.forEach((field, index) => {
-      data[field] = userFromDb.values[0][index]
-    })
-    return data
-  }
 }
