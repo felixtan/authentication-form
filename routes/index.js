@@ -6,7 +6,8 @@ module.exports = (app, db, passport) => {
     passwordRecoveryStage2  :  getRouter('passwordRecovery/stage2'),
     passwordRecoveryStage3  :  getRouter('passwordRecovery/stage3'),
     home                    :  getRouter('home'),
-    logout                  :  getRouter('logout')
+    logout                  :  getRouter('logout'),
+    pageNotFound            :  getRouter('pageNotFound')
   }
 
   function getRouter(view) {

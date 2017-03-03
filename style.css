@@ -297,3 +297,9 @@ i.invalid-input-icon {
 .tip-message {
   background-color: hsl(120, 100%, 45%);
 }
+
+/* 404 */
+#page-not-found-image {
+  max-height: 100%;
+  max-width: 100%;
+}
