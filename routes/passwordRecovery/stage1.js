@@ -1,22 +1,12 @@
 module.exports = (app, db, passport) => {
 
   const router = require('express').Router({ caseSensitive: true })
-  const nodemailer = require('nodemailer')
   const messages = require('../../scripts/helpers.js').messages
+  const nodemailer = require('../../scripts/helpers.js').nodemailer
+  const createMail = require('../../scripts/helpers.js').createMail
+  const getRandomString = require('../../scripts/helpers.js').getRandomString
   const getUserByEmail = require('../../scripts/helpers.js').getUserByEmail
-  const emailIsEncoded = require('../../scripts/helpers.js').emailIsEncoded
-
-  const myEmail = 'authportal64@gmail.com'
-  const myPass = 'steamisgay1'
-  const myName = 'Jesus'
-
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: myEmail,
-      pass: myPass
-    }
-  })
+  const renderOpts500 = require('../../scripts/helpers.js').renderOpts500
 
   router.get('/', (req, res) => {
 
@@ -24,8 +14,22 @@ module.exports = (app, db, passport) => {
 
   })
 
-
   router.post('/', (req, res, next) => {
+
+    if (!!app.locals.user && !!app.locals.passwordRecoveryAttempt) {
+
+      return res.render('passwordRecoveryStage2', {
+
+        error: true,
+        status: 400,
+        errorMessage: 'You have already begun the process of password recovery. Please check your email for the security code.'
+
+      }, (err, html) => {
+
+        return res.status(400).send(html)
+
+      })
+    }
 
     let user = null
 
@@ -35,7 +39,7 @@ module.exports = (app, db, passport) => {
 
       if (user === undefined || user === null) {
 
-        res.render('passwordRecoveryStage1', {
+        return res.render('passwordRecoveryStage1', {
 
           error: true,
           status: 404,
@@ -53,8 +57,9 @@ module.exports = (app, db, passport) => {
 
           app.locals.passwordRecoveryAttempt = {
             code: getRandomString(6),
-            start: (new Date()).getTime(),
-            attempts: 0
+            start: Date.now(),
+            attempts: 0,
+            showCheckEmailTip: true,
           }
 
         } else if (app.locals.passwordRecoveryAttempt.attempts > 0) {
@@ -71,15 +76,15 @@ module.exports = (app, db, passport) => {
           // this is a "Resend code" request. Set a new code
           // and reset the timer.
           app.locals.passwordRecoveryAttempt.code = getRandomString(6)
-          app.locals.passwordRecoveryAttempt.start = (new Date()).getTime()
+          app.locals.passwordRecoveryAttempt.start = Date.now()
 
         }
 
         try {
 
-          const userEmail = emailIsEncoded(user.email) ? decodeURIComponent(user.email) : user.email
+          const mail = createMail(decodeURIComponent(user.email), decodeURIComponent(user.name), app.locals.passwordRecoveryAttempt.code)
 
-          transporter.sendMail(createMail(userEmail, decodeURIComponent(user.name), app.locals.passwordRecoveryAttempt.code), (err, info) => {
+          nodemailer.sendMail(mail, (err, info) => {
 
             if (err) {
 
@@ -91,7 +96,8 @@ module.exports = (app, db, passport) => {
 
             }
 
-            app.locals.userEmail = user.email
+            app.locals.user = user
+            if (app.locals.user.hash) delete app.locals.user.hash
             return res.redirect('/password-recovery/stage2')
 
           })
@@ -118,123 +124,6 @@ module.exports = (app, db, passport) => {
       })
     }
   })
-
-  /**
-   * Returns boilerplate error 500 render options
-   */
-  function renderOpts500() {
-    return {
-      error: true,
-      status: 500,
-      errorMessage: messages.serverErrorMessage
-    }
-  }
-
-  /**
-   *  Generates array of integers from start to end inclusive i.e. [start...end]
-   */
-  function range(start, end) {
-
-    start = parseInt(start)
-    end = parseInt(end)
-
-    if (isNaN(start)) {
-      throw new TypeError('argument start is not a number')
-    }
-
-    if (isNaN(end)) {
-      throw new TypeError('argument end is not a number')
-    }
-
-    return [...Array(end-start+1).keys()].map(i => start + i)
-  }
-
-  /*
-  * Decimal codes of digits and uppercase letters
-  */
-  const characterSet = range(48, 57).concat(range(65, 90))
-
-  /**
-   * Get random in in [min, ..., max)
-   */
-  function getRandomInt(min, max) {
-
-    if (min !== undefined && max === undefined) {
-      max = min
-      min = 0
-    }
-
-    min = parseInt(min)
-    max = parseInt(max)
-
-    if (isNaN(min)) {
-      throw new TypeError('argument min is not a number')
-    }
-
-    if (isNaN(max)) {
-      throw new TypeError('argument max is not a number')
-    }
-
-    return Math.floor(Math.random() * (max - min)) + min
-  }
-
-  /**
-   * Shuffles array in place. ES6 version
-   * @param {Array} a items The array containing the items.
-   */
-  function shuffle(a) {
-    for (let i = a.length; i; i--) {
-        let j = Math.floor(Math.random() * i);
-        [a[i - 1], a[j]] = [a[j], a[i - 1]];
-    }
-  }
-
-  /*
-   * Generates random code sent to email submitted to password recovery form
-   */
-  function getRandomString(length) {
-
-    length = parseInt(length)
-
-    if (isNaN(length)) {
-      throw new TypeError('argument length is not a number')
-    }
-
-    let result = ''
-
-    shuffle(characterSet)
-
-    for (let i = 0; i < length; i++) {
-      result += String.fromCharCode(characterSet[getRandomInt(0, characterSet.length)])
-    }
-
-    return result
-  }
-
-  /**
-   * Password recovery email template
-   */
-  function createMail(userEmail, userFullName, tempCode) {
-    return {
-      from: myEmail,
-      to: userEmail,
-      subject: 'Reset your password',
-      html: `
-        <p>Dear ${userFullName},</p>
-        <br>
-        <p>For security reasons, we're unable to send your original password via email.</p>
-        <br>
-        <p>Please enter this code in the form to reset your password:</p>
-        <p><b>${tempCode}</b></p>
-        <p><b>Please note that the code will expire in 20 minutes.</b></p>
-        <br>
-        <p>Thanks for being a member.</p>
-        <br>
-        <p>Sincerely,</p>
-        <p>${myName}</p>
-      `
-    }
-  }
 
   return router
 }

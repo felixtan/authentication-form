@@ -48,6 +48,7 @@ app.use('/signup', routers.signup)
 app.use('/login', routers.login)
 app.use('/password-recovery/stage1', routers.passwordRecoveryStage1)
 app.use('/password-recovery/stage2', routers.passwordRecoveryStage2)
+app.use('/password-recovery/stage3', routers.passwordRecoveryStage3)
 app.use('/logout', routers.logout)
 
 app.listen(3000)

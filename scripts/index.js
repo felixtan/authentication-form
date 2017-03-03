@@ -5,7 +5,7 @@
     const inputs = document.getElementsByTagName('input')
 
     /**
-     *  Event handler for closing error message 
+     *  Event handler for closing error message
      */
     window.helpers.setUpCloseErrorMessageIcon()
 

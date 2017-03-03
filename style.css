@@ -266,27 +266,34 @@ i.invalid-input-icon {
   align-items: center;
 }
 
-/* Login error message */
-.err-message-container {
-  background-color: hsl(0, 100%, 60%);
+/* Messages */
+.message-container {
   color: white;
   border-radius: 3px;
   font-weight: 300;
   position: relative;
 }
 
-.err-message {
+.message {
   padding: 10px 15px 10px 10px;
 }
 
-.close-err-message-container {
+.close-message-container {
   position: absolute;
   width: 100%;
   display: flex;
   justify-content: flex-end;
 }
 
-.close-err-message {
+.close-message {
   margin-top: 2px;
   margin-right: 4px;
+}
+
+.error-message {
+  background-color: hsl(0, 100%, 60%);
+}
+
+.tip-message {
+  background-color: hsl(120, 100%, 45%);
 }
