@@ -27,9 +27,11 @@
                  type='text'
                  form='signup-form'
                  name='fullName'
-                 pattern='[\s\x27\x30-\x39\x2C-\x2E\x41-\x5A\x61-\x7A\xC0-\xD6\xD8-\xF6\xF8-\xFF\u0100-\uFFFF]+'
+                 pattern='^([\x27\x30-\x39\x2C-\x2E\x41-\x5A\x61-\x7A\xC0-\xD6\xD8-\xF6\xF8-\xFF\u0100-\uFFFF]+((\s)?))+[\x27\x30-\x39\x2C-\x2E\x41-\x5A\x61-\x7A\xC0-\xD6\xD8-\xF6\xF8-\xFF\u0100-\uFFFF]+$'
                  maxlength='100'
                  required />
+                 <!-- previous pattern -->
+                 <!-- [\x27\x30-\x39\x2C-\x2E\x41-\x5A\x61-\x7A\xC0-\xD6\xD8-\xF6\xF8-\xFF\u0100-\uFFFF]+ -->
 
           <span class='validation-message'>
             <span class='valid-input-message-container bh'>
@@ -54,7 +56,7 @@
                  type='text'
                  form='signup-form'
                  name='companyName'
-                 pattern='[\s\x21\x26\x27\x30-\x39\x2C-\x2E\x41-\x5A\x61-\x7A\xC0-\xD6\xD8-\xF6\xF8-\xFF\u0100-\uFFFF]+'
+                 pattern='^([\x27\x30-\x39\x2C-\x2E\x41-\x5A\x61-\x7A\xC0-\xD6\xD8-\xF6\xF8-\xFF\u0100-\uFFFF]+((\s)?))+[\x27\x30-\x39\x2C-\x2E\x41-\x5A\x61-\x7A\xC0-\xD6\xD8-\xF6\xF8-\xFF\u0100-\uFFFF]+$'
                  maxlength='50'
                  class='optional' />
 
@@ -80,6 +82,7 @@
                  type='email'
                  form='signup-form'
                  name='email'
+                 pattern='^\S+@\S+\.\S+$'
                  maxlength='50'
                  required />
 
@@ -106,6 +109,8 @@
                  type='password'
                  form='signup-form'
                  name='password'
+                 pattern='^\S+$'
+                 maxlength="50"
                  required />
 
            <span class='validation-message'>
