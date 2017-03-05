@@ -58,11 +58,11 @@ module.exports = (app, db, passport) => {
   })
 
   router.post('/', (req, res) => {
-
+    console.log('submit code ======================')
     const TWENTY_MINUTES_IN_MS = 1000*60*20
 
     if (Date.now() - app.locals.passwordRecoveryAttempt.start >= TWENTY_MINUTES_IN_MS) {
-
+      console.log('expired================>')
       clearPasswordRecoveryAttempt(app)
 
       // Invalidate the security code
@@ -80,12 +80,12 @@ module.exports = (app, db, passport) => {
 
     // Validate the code
     if (req.body.code === app.locals.passwordRecoveryAttempt.code) {
-
+      console.log('validated================>')
       app.locals.passwordRecoveryAttempt.codeValidated = true
       res.redirect('/password-recovery/stage3')
 
     } else {
-
+      console.log('failed================>')
       app.locals.passwordRecoveryAttempt.attempts++
 
       const renderOpts = {
@@ -95,7 +95,7 @@ module.exports = (app, db, passport) => {
       }
 
       if (app.locals.passwordRecoveryAttempt.attempts === 3) {
-
+        console.log('>3 Lock it================>')
         // TODO: Lock the account
 
         clearPasswordRecoveryAttempt(app)
@@ -118,7 +118,7 @@ module.exports = (app, db, passport) => {
   })
 
   router.post('/resend-code', (req, res) => {
-
+    console.log('resend code ======================')
     if (app.locals.user === undefined || app.locals.passwordRecoveryAttempt === undefined) {
 
       res.redirect('/password-recovery/stage1')

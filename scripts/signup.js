@@ -5,7 +5,7 @@
 
     if (form.id === 'signup-form') {
 
-      helpers.attachDirtyCheckingEventListenersToInputs()
+      // helpers.attachDirtyCheckingEventListenersToInputs()
 
     }
 
