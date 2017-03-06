@@ -26,7 +26,6 @@ const nodemailer = require('nodemailer').createTransport({
 module.exports = {
 
   // general
-  encodeURIComponentEnhanced,
   emailIsEncoded,
 
   // password recovery
@@ -90,7 +89,7 @@ function getUserByEmail(db, email) {
 
 function createUser(db, data) {
 
-  insertUserStatement = db.prepare('INSERT INTO users VALUES (:name, :company, :email, :password);')
+  const insertUserStatement = db.prepare('INSERT INTO users VALUES (:name, :company, :email, :password);')
 
   insertUserStatement.bind({
     ':name': user.name,
@@ -99,7 +98,7 @@ function createUser(db, data) {
     ':password': user.hash
   })
 
-  console.log(insertUserStatement.step())
+  insertUserStatement.step()
 }
 
 /**
@@ -150,7 +149,7 @@ function createMail(userEmail, userFullName, tempCode) {
 }
 
 /**
- * Delete user information after exiting password recovery
+ * Delete user information from app.locals after exiting password recovery
  */
 function clearPasswordRecoveryAttempt(app) {
   delete app.locals.passwordRecoveryAttempt

@@ -15,10 +15,21 @@
       helpers.setUpCloseErrorMessageIcon()
       helpers.attachDirtyCheckingEventListenersToInputs(form)
 
-      submitBtn.addEventListener('click', () => {
+      // Submit
+      submitBtn.addEventListener('click', e => {
 
-        if (form.checkValidity()) form.submit()
+        if (form.checkValidity()) {
 
+          if (form.id !== 'forgotpw-form3') {
+
+            form.submit()
+
+          } else {
+
+            if (passwordsMatch()) form.submit()
+
+          }
+        }
       })
 
       /**
@@ -26,19 +37,21 @@
        *
        * Password recovery stage 3 form will handle it's own
        */
-      if (form.id !== 'forgotpw-form3') {
+      form.addEventListener('keypress', e => {
 
-        form.addEventListener('keypress', e => {
+        if (e.keyCode === 13 && form.checkValidity()) {
 
-          if (!!submitBtn && e.keyCode === 13 && form.checkValidity()) {
+          if (form.id !== 'forgotpw-form3') {
 
-            submitBtn.click()
+            form.submit()
+
+          } else {
+
+            if (passwordsMatch()) form.submit()
 
           }
-
-        })
-
-      }
+        }
+      })
 
       /**
        *  Show password
@@ -56,6 +69,17 @@
           if (!!repeatPassword) repeatPassword.type = showPasswordCheck.checked ? 'text' : 'password'
 
         })
+
+      }
+
+      /**
+       * Check that passwords match for password recovery
+       */
+      function passwordsMatch() {
+
+        const password = document.getElementById('password')
+        const repeatPassword = document.getElementById('repeat-password')
+        return password.value === repeatPassword.value
 
       }
 

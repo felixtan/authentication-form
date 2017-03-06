@@ -19,6 +19,15 @@
       </div>
       {{/error}}
 
+      {{#tip}}
+      <div class='message-container tip-message'>
+        <span class='close-message-container'>
+          <i class="close-message btn fa fa-times" aria-hidden="true"></i>
+        </span>
+        <p class='message'>{{message}}</p>
+      </div>
+      {{/tip}}
+
       <div class='label-container'>
         <label for='login-email'>Email</label>
       </div>

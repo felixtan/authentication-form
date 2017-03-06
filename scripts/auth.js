@@ -4,7 +4,6 @@ module.exports = (db) => {
   const Strategy = require('passport-local').Strategy
   const bcrypt = require('bcrypt')
   const saltRounds = 10
-  const encodeURIComponentEnhanced = require('./helpers').encodeURIComponentEnhanced
   const errorMessages = require('./helpers').messages
   const getUserByEmail = require('./helpers').getUserByEmail
 
@@ -47,7 +46,7 @@ module.exports = (db) => {
 
       try {
 
-        bcrypt.compare(encodeURIComponentEnhanced(password), user.password, (err, match) => {
+        bcrypt.compare(encodeURIComponent(password), user.password, (err, match) => {
 
           if (match) {
 
@@ -131,7 +130,7 @@ module.exports = (db) => {
 
     try {
 
-      bcrypt.hash(encodeURIComponentEnhanced(password), saltRounds, (err, hash) => {
+      bcrypt.hash(encodeURIComponent(password), saltRounds, (err, hash) => {
 
         if (err) {
 
@@ -139,7 +138,7 @@ module.exports = (db) => {
             error: true,
             status: 500,
             clientMessage: errorMessages.serverErrorMessage,
-            serverMessage: `bcrypt.hash returned error: ${err}`
+            serverMessage: err.stack
           })
 
         }

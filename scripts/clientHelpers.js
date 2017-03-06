@@ -125,9 +125,7 @@
                 setCSSBasedOnValidity((repeatPassword.validity.valid && e.target.value === repeatPassword.value), repeatPassword, repeatPasswordLabel, repeatPasswordValidMessage, repeatPasswordInvalidMessage)
 
               }
-
             }
-
           }
 
           if (e.target.classList.contains('empty-input') && e.target.classList.contains('optional')) {

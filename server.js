@@ -7,7 +7,6 @@ const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const sql = require('sql.js')
 const hbs = require('express-hbs')
-const encodeURIComponentEnhanced = require('./scripts/helpers').encodeURIComponentEnhanced
 
 // HTTPS
 const certDirectory = path.join(__dirname, "../../.localhost-ssl/")
@@ -51,9 +50,7 @@ app.use('/password-recovery/stage2', routers.passwordRecoveryStage2)
 app.use('/password-recovery/stage3', routers.passwordRecoveryStage3)
 app.use('/logout', routers.logout)
 app.get('/page-not-found', routers.pageNotFound)
-app.all('/*', (req, res) => {
-  res.status(404).redirect('/page-not-found')
-})
+app.all('/*', (req, res) => res.status(404).redirect('/page-not-found'))
 
 app.listen(3000)
 https.createServer(serverOptions, app).listen(3001)

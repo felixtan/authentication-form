@@ -96,8 +96,8 @@ module.exports = (app, db, passport) => {
 
             }
 
+            delete user.password
             app.locals.user = user
-            if (app.locals.user.hash) delete app.locals.user.hash
             return res.redirect('/password-recovery/stage2')
 
           })

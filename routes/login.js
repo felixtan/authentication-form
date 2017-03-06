@@ -3,7 +3,24 @@ module.exports = (app, db, passport) => {
   const router = require('express').Router({ caseSensitive: true })
 
   router.get('/', (req, res) => {
-    return res.render('login', { loginErr: false })
+
+    if (app.locals.passwordReset) {
+
+      delete app.locals.passwordReset
+
+      const renderOpts = {
+        tip: true,
+        message: 'Your password was reset!'
+      }
+
+      return res.render('login', renderOpts, (err, html) => res.send(html))
+
+    } else {
+
+      return res.render('login')
+
+    }
+
   })
 
   router.post('/', (req, res, next) => {
