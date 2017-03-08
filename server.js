@@ -30,8 +30,11 @@ app.engine('hbs', hbs.express4({
 app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');
 
+// Helper functions
+const helpers = require('./scripts/helpers.js')(db)
+
 // Middleware
-const passport = require('./scripts/auth.js')(db)
+const passport = require('./scripts/auth.js')(db, helpers)
 app.use(express.static(__dirname + '/'))
 app.use(redirectToHttps)
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -42,7 +45,6 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 // Routes
-const helpers = require('./scripts/helpers.js')(db)
 const routers = require('./routes/index.js')(app, db, passport, helpers)
 app.use('/', routers.home)
 app.use('/signup', routers.signup)

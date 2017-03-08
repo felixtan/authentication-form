@@ -1,12 +1,13 @@
-module.exports = (db) => {
+module.exports = (db, helpers) => {
 
   const passport = require('passport')
   const Strategy = require('passport-local').Strategy
   const bcrypt = require('bcrypt')
   const saltRounds = 10
-  const errorMessages = require('./helpers')(db).messages
-  const getUserByEmail = require('./helpers')(db).getUserByEmail
-  const createUser = require('./helpers')(db).createUser
+
+  const errorMessages = helpers.messages
+  const getUserByEmail = helpers.getUserByEmail
+  const createUser = helpers.createUser
 
   passport.serializeUser((user, cb) => {
 
