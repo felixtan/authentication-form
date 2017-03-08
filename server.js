@@ -35,7 +35,7 @@ const passport = require('./scripts/auth.js')(db)
 app.use(express.static(__dirname + '/'))
 app.use(redirectToHttps)
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use(printRequestMiddleware)
+// app.use(printRequest)
 app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }))
 app.use(passport.initialize())
 app.use(passport.session())
@@ -55,7 +55,7 @@ app.all('/*', (req, res) => res.status(404).redirect('/page-not-found'))
 app.listen(3000)
 https.createServer(serverOptions, app).listen(3001)
 
-function printRequestMiddleware(req, res, next) {
+function printRequest(req, res, next) {
   console.log(`\nHeaders:\n${JSON.stringify(req.headers, null, 4)}\n\nBody:\n${JSON.stringify(req.body, null, 4)}`)
   next()
 }

@@ -6,6 +6,7 @@ module.exports = (db) => {
   const saltRounds = 10
   const errorMessages = require('./helpers').messages
   const getUserByEmail = require('./helpers').getUserByEmail
+  const createUser = require('./helpers').createUser
 
   passport.serializeUser((user, cb) => {
 
@@ -117,7 +118,7 @@ module.exports = (db) => {
 
     const checkUser = getUserByEmail(db, email)
 
-    if (checkUser !== null && checkUser !== undefined) {
+    if (!!checkUser && Object.keys(checkUser).length !== 0) {
 
       return cb(null, false, {
         error: true,
@@ -147,20 +148,12 @@ module.exports = (db) => {
           name: encodeURIComponent(req.body.fullName),
           company: encodeURIComponent(req.body.companyName),
           email: encodeURIComponent(req.body.email),
+          passwordHash: hash
         }
 
         try {
 
-          const insertUserStatement = db.prepare('INSERT INTO users VALUES (:name, :company, :email, :password);')
-
-          insertUserStatement.bind({
-            ':name': user.name,
-            ':company': user.company,
-            ':email': user.email,
-            ':password': hash
-          })
-
-          insertUserStatement.step()
+          createUser(db, user)
 
           return cb(null, user, {
             error: false,

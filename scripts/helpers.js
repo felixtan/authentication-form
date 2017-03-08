@@ -35,8 +35,8 @@ module.exports = {
   nodemailer,
 
   // db helpers
-  prettifyUserFromDb,
   getUserByEmail,
+  createUser,
 
   // render options
   renderOpts500,
@@ -58,25 +58,6 @@ function encodeURIComponentEnhanced(input) {
 }
 
 /**
- * Returns user's data in key/value pair form
- *
- * @param {Object} userFromDb - object returned from sql.js exec query
- */
-
-function prettifyUserFromDb(userFromDb) {
-
-  if (userFromDb === null || userFromDb === undefined) return userFromDb
-
-  const data = {}
-
-  userFromDb.columns.forEach((field, index) => {
-    data[field] = userFromDb.values[0][index]
-  })
-
-  return data
-}
-
-/**
  * Retrieve user from sqlite instance by email
  *
  * @param {Object} db - app's sql.js sqlite3 instance
@@ -84,10 +65,13 @@ function prettifyUserFromDb(userFromDb) {
  */
 function getUserByEmail(db, email) {
   email = emailIsEncoded(email) ? email : encodeURIComponent(email)
-  return prettifyUserFromDb(db.exec(`SELECT * FROM users WHERE email=${JSON.stringify(email)} LIMIT 1`)[0])
+  const statement = db.prepare('SELECT * FROM users WHERE email = :encodedEmail LIMIT 1')
+  statement.bind({ ':encodedEmail': email })
+  statement.step()
+  return statement.getAsObject()
 }
 
-function createUser(db, data) {
+function createUser(db, user) {
 
   const insertUserStatement = db.prepare('INSERT INTO users VALUES (:name, :company, :email, :password);')
 
@@ -95,7 +79,7 @@ function createUser(db, data) {
     ':name': user.name,
     ':company': user.company,
     ':email': user.email,
-    ':password': user.hash
+    ':password': user.passwordHash
   })
 
   insertUserStatement.step()
