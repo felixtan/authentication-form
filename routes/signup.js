@@ -1,7 +1,7 @@
-module.exports = (app, db, passport) => {
+module.exports = (app, db, passport, helpers) => {
 
   const router = require('express').Router({ caseSensitive: true })
-  const messages = require('../scripts/helpers.js').messages
+  const messages = helpers.messages
 
   router.get('/', (req, res) => res.render('signup'))
 

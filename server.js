@@ -35,13 +35,15 @@ const passport = require('./scripts/auth.js')(db)
 app.use(express.static(__dirname + '/'))
 app.use(redirectToHttps)
 app.use(bodyParser.urlencoded({ extended: true }))
-// app.use(printRequest)
+// app.use(printRequestHeaders)
+app.use(printRequestBody)
 app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }))
 app.use(passport.initialize())
 app.use(passport.session())
 
 // Routes
-const routers = require('./routes/index.js')(app, db, passport)
+const helpers = require('./scripts/helpers.js')(db)
+const routers = require('./routes/index.js')(app, db, passport, helpers)
 app.use('/', routers.home)
 app.use('/signup', routers.signup)
 app.use('/login', routers.login)
@@ -55,8 +57,13 @@ app.all('/*', (req, res) => res.status(404).redirect('/page-not-found'))
 app.listen(3000)
 https.createServer(serverOptions, app).listen(3001)
 
-function printRequest(req, res, next) {
-  console.log(`\nHeaders:\n${JSON.stringify(req.headers, null, 4)}\n\nBody:\n${JSON.stringify(req.body, null, 4)}`)
+function printRequestHeaders(req, res, next) {
+  console.log(`\nHeaders:\n${JSON.stringify(req.headers, null, 4)}`)
+  next()
+}
+
+function printRequestBody(req, res, next) {
+  console.log(`\nBody:\n${JSON.stringify(req.body, null, 4)}`)
   next()
 }
 

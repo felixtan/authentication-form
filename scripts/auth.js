@@ -4,9 +4,9 @@ module.exports = (db) => {
   const Strategy = require('passport-local').Strategy
   const bcrypt = require('bcrypt')
   const saltRounds = 10
-  const errorMessages = require('./helpers').messages
-  const getUserByEmail = require('./helpers').getUserByEmail
-  const createUser = require('./helpers').createUser
+  const errorMessages = require('./helpers')(db).messages
+  const getUserByEmail = require('./helpers')(db).getUserByEmail
+  const createUser = require('./helpers')(db).createUser
 
   passport.serializeUser((user, cb) => {
 
@@ -17,7 +17,7 @@ module.exports = (db) => {
   passport.deserializeUser((email, cb) => {
 
     // Check here, if getting Error: Failed to deserialize user out of session
-    const user = getUserByEmail(db, email)
+    const user = getUserByEmail(email)
 
     if (user === null || user === undefined) {
 
@@ -43,7 +43,7 @@ module.exports = (db) => {
 
     try {
 
-      user = getUserByEmail(db, email)
+      user = getUserByEmail(email)
 
       try {
 
@@ -116,7 +116,7 @@ module.exports = (db) => {
 
   }, (req, email, password, cb) => {
 
-    const checkUser = getUserByEmail(db, email)
+    const checkUser = getUserByEmail(email)
 
     if (!!checkUser && Object.keys(checkUser).length !== 0) {
 
@@ -153,7 +153,7 @@ module.exports = (db) => {
 
         try {
 
-          createUser(db, user)
+          createUser(user)
 
           return cb(null, user, {
             error: false,

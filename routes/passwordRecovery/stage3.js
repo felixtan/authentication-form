@@ -1,10 +1,11 @@
-module.exports = (app, db, passport) => {
+module.exports = (app, db, passport, helpers) => {
 
   const router = require('express').Router({ caseSensitive: true })
   const bcrypt = require('bcrypt')
   const saltRounds = 10
-  const getUserByEmail = require('../../scripts/helpers.js').getUserByEmail
-  const clearPasswordRecoveryAttempt = require('../../scripts/helpers.js').clearPasswordRecoveryAttempt
+  const updateUserPassword = helpers.updateUserPassword
+  const getUserByEmail = helpers.getUserByEmail
+  const clearPasswordRecoveryAttempt = helpers.clearPasswordRecoveryAttempt
 
   router.get('/', (req, res) => {
 
@@ -80,10 +81,9 @@ module.exports = (app, db, passport) => {
             } else {
 
               try {
-                // get the user, update hashed pw, save, redirect to login
-                const updateStatement = db.prepare('UPDATE users SET password = :newPassword WHERE email = :email;')
-                updateStatement.bind({ ':email': app.locals.user.email, ':newPassword': hash })
-                updateStatement.step()
+
+                updateUserPassword(app.locals.user.email, hash)
+
                 app.locals.passwordReset = true
                 clearPasswordRecoveryAttempt(app)
 

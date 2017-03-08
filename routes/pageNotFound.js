@@ -1,4 +1,4 @@
-module.exports = (app, db, passport) => {
+module.exports = (app, db, passport, helpers) => {
 
   const router = require('express').Router({ caseSensitive: true })
 

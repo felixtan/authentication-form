@@ -1,12 +1,12 @@
-module.exports = (app, db, passport) => {
+module.exports = (app, db, passport, helpers) => {
 
   const router = require('express').Router({ caseSensitive: true })
-  const messages = require('../../scripts/helpers.js').messages
-  const nodemailer = require('../../scripts/helpers.js').nodemailer
-  const createMail = require('../../scripts/helpers.js').createMail
-  const getRandomString = require('../../scripts/helpers.js').getRandomString
-  const getUserByEmail = require('../../scripts/helpers.js').getUserByEmail
-  const renderOpts500 = require('../../scripts/helpers.js').renderOpts500
+  const messages = helpers.messages
+  const nodemailer = helpers.nodemailer
+  const createMail = helpers.createMail
+  const getUserByEmail = helpers.getUserByEmail
+  const getRandomString = helpers.getRandomString
+  const renderOpts500 = helpers.renderOpts500
 
   router.get('/', (req, res) => {
 
@@ -35,7 +35,7 @@ module.exports = (app, db, passport) => {
 
     try {
 
-      user = getUserByEmail(db, req.body.email)
+      user = getUserByEmail(req.body.email)
 
       if (user === undefined || user === null) {
 
