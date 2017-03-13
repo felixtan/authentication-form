@@ -7,9 +7,10 @@ module.exports = (db) => {
   /**
    * Prepared SQL statements
    */
-   const getUserByEmailStatement = db.prepare('SELECT * FROM users WHERE email = :encodedEmail LIMIT 1')
-   const createUserStatement = db.prepare('INSERT INTO users VALUES (:name, :company, :email, :password);')
+   const getUserByEmailStatement = db.prepare('SELECT * FROM users WHERE email = :email LIMIT 1')
+   const createUserStatement = db.prepare('INSERT INTO users VALUES (:name, :company, :email, :password, :isLocked);')
    const updateUserStatement = db.prepare('UPDATE users SET password = :newPasswordHash WHERE email = :email;')
+   const lockUserAcctStatement = db.prepare('UPDATE users SET isLocked = :lockIt WHERE email = :email;')
 
   /*
    * Decimal codes of digits and uppercase letters
@@ -46,6 +47,7 @@ module.exports = (db) => {
     getUserByEmail,
     createUser,
     updateUserPassword,
+    lockUser,
 
     // render options
     renderOpts500,
@@ -67,13 +69,25 @@ module.exports = (db) => {
   }
 
   /**
+   * Lock/unlock user
+   *
+   * @param {String} email - user's email, decoded
+   * @param {Boolean} lockIt - true is locking, false if unlocking
+   */
+  function lockUser(email, lockIt) {
+    email = emailIsEncoded(email) ? email : encodeURIComponent(email)
+    lockUserAcctStatement.bind({ ':lockIt': lockIt, ':email': email })
+    lockUserAcctStatement.step()
+  }
+
+  /**
    * Retrieve user from sqlite instance by email, utilizing prepared statement
    *
    * @param {String} email - user's email, decoded
    */
   function getUserByEmail(email) {
     email = emailIsEncoded(email) ? email : encodeURIComponent(email)
-    getUserByEmailStatement.bind({ ':encodedEmail': email })
+    getUserByEmailStatement.bind({ ':email': email })
     getUserByEmailStatement.step()
     return getUserByEmailStatement.getAsObject()
   }
@@ -88,7 +102,8 @@ module.exports = (db) => {
       ':name': user.name,
       ':company': user.company,
       ':email': user.email,
-      ':password': user.passwordHash
+      ':password': user.passwordHash,
+      ':isLocked': 0
     })
 
     createUserStatement.step()

@@ -17,7 +17,7 @@ const serverOptions = {
 
 // Database
 const db = new sql.Database()
-db.run('CREATE TABLE users (name char, company char, email char, password char);')
+db.run('CREATE TABLE users (name text, company text, email text, password text, isLocked integer);')
 
 // Express
 const app = express()

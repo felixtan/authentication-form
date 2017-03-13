@@ -5,6 +5,7 @@ module.exports = (app, db, passport, helpers) => {
   const getRandomString = helpers.getRandomString
   const renderOpts500 = helpers.renderOpts500
   const createMail = helpers.createMail
+  const lockUser = helpers.lockUser
   const clearPasswordRecoveryAttempt = helpers.clearPasswordRecoveryAttempt
 
   router.get('/', (req, res) => {
@@ -91,12 +92,9 @@ module.exports = (app, db, passport, helpers) => {
       if (app.locals.passwordRecoveryAttempt.attempts === 3) {
 
         // TODO: Lock the account
-
-        clearPasswordRecoveryAttempt(app)
-
-        renderOpts.errorMessage = 'You have entered an incorrect security code 3 times. Due to security concerns, your account has been locked. Please contact the site administrator.'
-
-        return res.render('login', renderOpts, (err, html) => res.status(401).send(html))
+        lockUser(app.locals.user.email, 1)
+        app.locals.errorMessage = 'You have entered an incorrect security code 3 times. Due to security concerns, your account has been locked. Please contact the site administrator.'
+        return res.redirect('/login')
 
       } else {
 

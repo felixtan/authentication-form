@@ -4,22 +4,27 @@ module.exports = (app, db, passport, helpers) => {
 
   router.get('/', (req, res) => {
 
-    if (app.locals.passwordReset) {
+    const renderOpts = {}
 
-      delete app.locals.passwordReset
+    if (app.locals.errorMessage) {
 
-      const renderOpts = {
-        tip: true,
-        message: 'Your password was reset!'
-      }
-
-      return res.render('login', renderOpts, (err, html) => res.send(html))
-
-    } else {
-
-      return res.render('login')
+      renderOpts.error = true
+      renderOpts.errorMessage = app.locals.errorMessage
+      delete app.locals.errorMessage
 
     }
+
+    if (app.locals.passwordReset) {
+
+      renderOpts.tip = true
+      renderOpts.message = 'Your password was reset!'
+      delete app.locals.passwordReset
+
+    }
+
+    helpers.clearPasswordRecoveryAttempt(app)
+
+    return res.render('login', renderOpts, (err, html) => res.send(html))
 
   })
 

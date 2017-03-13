@@ -46,6 +46,18 @@ module.exports = (db, helpers) => {
 
       user = getUserByEmail(email)
 
+      // Check that the user is not locked
+      if (user.isLocked) {
+
+        return cb(null, false, {
+          status: 200,
+          error: false,
+          clientMessage: 'Sorry, your account has been locked. Please contact the site administrator.',
+          serverMessage: `User ${user.email} is locked`
+        })
+
+      }
+
       try {
 
         bcrypt.compare(encodeURIComponent(password), user.password, (err, match) => {
