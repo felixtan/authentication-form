@@ -1,10 +1,20 @@
-# Signup, Login, and Password recovery forms
+# Signup, Login, and Password Recovery forms
 
 Just as the title suggests. Forms and workflows for user account creation, authentication, and password recovery using vanilla javascript, vanilla CSS, and handlebars templating.
 
-### Views
+### Signup
 <p align="center">
-  <img src="images/views.gif">
+  <img src="images/signup.png">
+</p>
+
+### Login
+<p align="center">
+  <img src="images/login.png">
+</p>
+
+### Password Recovery
+<p align="center">
+  <img src="images/pwrecovery.gif">
 </p>
 
 ## Installation
