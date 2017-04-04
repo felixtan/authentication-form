@@ -9,7 +9,7 @@ const sql = require('sql.js')
 const hbs = require('express-hbs')
 
 // HTTPS
-const certDirectory = path.join(__dirname, "../../.localhost-ssl/")
+const certDirectory = `${process.env.HOME}/.config/localhost-ssl/`
 const serverOptions = {
   key: fs.readFileSync(path.join(certDirectory, 'key.pem')),
   cert: fs.readFileSync(path.join(certDirectory, 'certificate.pem'))
@@ -21,7 +21,7 @@ db.run('CREATE TABLE users (name text, company text, email text, password text, 
 
 // Express
 const app = express()
-console.log(__dirname)
+
 // Templating
 app.engine('hbs', hbs.express4({
   partialsDir: __dirname + '/views/partials',
@@ -56,8 +56,8 @@ app.use('/logout', routers.logout)
 app.get('/page-not-found', routers.pageNotFound)
 app.all('/*', (req, res) => res.status(404).redirect('/page-not-found'))
 
-app.listen(3000)
-https.createServer(serverOptions, app).listen(3001)
+app.listen(3000, () => console.log('Listening on port 3000'))
+https.createServer(serverOptions, app).listen(3001, () => console.log('Listening on port 3001'))
 
 function printRequestHeaders(req, res, next) {
   console.log(`\nHeaders:\n${JSON.stringify(req.headers, null, 4)}`)

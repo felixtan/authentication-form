@@ -24,6 +24,8 @@ Just as the title suggests. Forms and workflows for user account creation, authe
 
 Please refer to the [nodemailer config](https://nodemailer.com/smtp/) for more information.
 
+4. Create a directory `<userHomeDir>/.config/localhost-ssl` with SSL private key `key.pem` and signed certificate `certificate.pem` inside.
+
 ## License
 
 MIT
