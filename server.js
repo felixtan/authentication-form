@@ -21,7 +21,7 @@ db.run('CREATE TABLE users (name text, company text, email text, password text, 
 
 // Express
 const app = express()
-
+console.log(__dirname)
 // Templating
 app.engine('hbs', hbs.express4({
   partialsDir: __dirname + '/views/partials',

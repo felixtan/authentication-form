@@ -22,14 +22,18 @@ module.exports = (db) => {
   /**
    * Nodemailer config
    */
-  const myEmail = 'authportal64@gmail.com'
-  const myPass = 'steamisgay1'
-  const myName = 'Jesus'
+  const nodemailerConfigPath = `${process.env.HOME}/.config/nodemailerConfig.json`
+  const nodemailerConfig = require(nodemailerConfigPath)
+  const nodemailerEmail = nodemailerConfig.user
+  const nodemailerPassword = nodemailerConfig.pass
+  const nodemailerName = nodemailerConfig.name
+  const nodemailerService = nodemailerConfig.service
+
   const nodemailer = require('nodemailer').createTransport({
-    service: 'gmail',
+    service: nodemailerService,
     auth: {
-      user: myEmail,
-      pass: myPass
+      user: nodemailerEmail,
+      pass: nodemailerPassword
     }
   })
 
@@ -147,7 +151,7 @@ module.exports = (db) => {
    */
   function createMail(userEmail, userFullName, tempCode) {
     return {
-      from: myEmail,
+      from: nodemailerEmail,
       to: userEmail,
       subject: 'Reset your password',
       html: `
@@ -163,7 +167,7 @@ module.exports = (db) => {
         <p>Thanks for being a member.</p><br>
 
         <p>Sincerely,</p>
-        <p>${myName}</p>
+        <p>${nodemailerName}</p>
       `
     }
   }
