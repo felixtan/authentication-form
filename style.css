@@ -303,3 +303,17 @@ i.invalid-input-icon {
   max-height: 100%;
   max-width: 100%;
 }
+
+#banner {
+  font-family: 'Lobster', cursive;
+  font-size: 50px;
+  text-align: center;
+  animation: rainbow 1s infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes rainbow {
+  0% { color: hsl(0, 100%, 50%); }
+  50% { color: hsl(120, 100%, 50%); }
+  100% { color: hsl(240, 100%, 50%); }
+}
